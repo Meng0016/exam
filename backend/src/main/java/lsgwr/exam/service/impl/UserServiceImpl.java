@@ -171,4 +171,9 @@ public class UserServiceImpl implements UserService {
         userInfoVo.setRoleVo(roleVo);
         return userInfoVo;
     }
+
+    public static void main(String[] args) {
+        String s = Base64.decodeStr("YWRtaW4xMjM=");
+        System.out.println(s);
+    }
 }
