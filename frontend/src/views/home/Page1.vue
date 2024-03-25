@@ -1,10 +1,10 @@
 <template>
   <div class="home-page page1">
     <div class="home-page-wrapper" id="page1-wrapper">
-      <div class="page1-bg" style="transform: translate(0px, 200.953px);">Feature</div>
+<!--      <div class="page1-bg" style="transform: translate(0px, 200.953px);">Feature</div>-->
 <!--      <h2>What can <span>Online System</span> do for you </h2>-->
-      <div class="title-line-wrapper page1-line"></div>
-      <list :data-source="features" />
+<!--      <div class="title-line-wrapper page1-line"></div>-->
+<!--      <list :data-source="features" />-->
     </div>
   </div>
 </template>

@@ -1,14 +1,14 @@
 <template>
   <div class="footer">
-    <div class="links">
-      <a href="https://github.com/19920625lsg/spring-boot-online-exam" target="_blank">代码仓</a>
-      <a href="https://19920625lsg.github.io" target="_blank">关于我</a>
-      <a href="mailto:liangshanguang2@gmail.com">联系我</a>
-    </div>
-    <div class="copyright">
-      Copyright
-      <a-icon type="copyright" /> 2020 <span>Liang Shan Guang</span>
-    </div>
+<!--    <div class="links">-->
+<!--      <a href="https://github.com/19920625lsg/spring-boot-online-exam" target="_blank">代码仓</a>-->
+<!--      <a href="https://19920625lsg.github.io" target="_blank">关于我</a>-->
+<!--      <a href="mailto:liangshanguang2@gmail.com">联系我</a>-->
+<!--    </div>-->
+<!--    <div class="copyright">-->
+<!--      Copyright-->
+<!--      <a-icon type="copyright" /> 2020 <span>Liang Shan Guang</span>-->
+<!--    </div>-->
   </div>
 </template>
 
