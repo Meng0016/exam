@@ -8,23 +8,23 @@
             <span class="title">Online Exam</span>
           </a>
         </div>
-        <div class="desc">
-          基于SpringBoot+Vue实现的在线考试系统
-        </div>
+<!--        <div class="desc">-->
+<!--          基于SpringBoot+Vue实现的在线考试系统-->
+<!--        </div>-->
       </div>
 
       <route-view></route-view>
 
-      <div class="footer">
-        <div class="links">
-          <a href="https://github.com/19920625lsg/spring-boot-online-exam" target="_blank">代码仓</a>
-          <a href="https://19920625lsg.github.io" target="_blank">关于我</a>
-          <a href="mailto:liangshanguang2@gmail.com">联系我</a>
-        </div>
-        <div class="copyright">
-          Copyright &copy; 2020 Liang Shan Guang
-        </div>
-      </div>
+<!--      <div class="footer">-->
+<!--&lt;!&ndash;        <div class="links">&ndash;&gt;-->
+<!--&lt;!&ndash;          <a href="https://github.com/19920625lsg/spring-boot-online-exam" target="_blank">代码仓</a>&ndash;&gt;-->
+<!--&lt;!&ndash;          <a href="https://19920625lsg.github.io" target="_blank">关于我</a>&ndash;&gt;-->
+<!--&lt;!&ndash;          <a href="mailto:liangshanguang2@gmail.com">联系我</a>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="copyright">&ndash;&gt;-->
+<!--&lt;!&ndash;          Copyright &copy; 2020 Liang Shan Guang&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--      </div>-->
     </div>
   </div>
 </template>
