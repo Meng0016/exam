@@ -9,8 +9,11 @@ package lsgwr.exam.service;
 import lsgwr.exam.dto.RegisterDTO;
 import lsgwr.exam.entity.User;
 import lsgwr.exam.qo.LoginQo;
+import lsgwr.exam.vo.ResultVO;
 import lsgwr.exam.vo.UserInfoVo;
 import lsgwr.exam.vo.UserVo;
+
+import java.util.List;
 
 public interface UserService {
     /**
@@ -42,4 +45,8 @@ public interface UserService {
      * @return 用户信息组装的实体
      */
     UserInfoVo getInfo(String userId);
+
+    ResultVO<List<UserVo>> getAllTeacher();
+
+    ResultVO<List<UserVo>> getAllStudent();
 }

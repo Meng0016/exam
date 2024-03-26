@@ -12,6 +12,8 @@ const api = {
   // 下面是自己的用户认证的接口
   UserRegister: '/user/register',
   UserLogin: '/user/login',
+  TeacherInfo: '/teacher/getAll',
+  StudentInfo: '/student/getAll',
 
   // 考试的接口
   ExamQuestionList: '/exam/question/list',

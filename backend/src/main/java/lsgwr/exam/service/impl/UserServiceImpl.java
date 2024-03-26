@@ -172,6 +172,17 @@ public class UserServiceImpl implements UserService {
         return userInfoVo;
     }
 
+    @Override
+    public ResultVO<List<UserVo>> getAllTeacher() {
+
+        return null;
+    }
+
+    @Override
+    public ResultVO<List<UserVo>> getAllStudent() {
+        return null;
+    }
+
     public static void main(String[] args) {
         String s = Base64.decodeStr("YWRtaW4xMjM=");
         System.out.println(s);

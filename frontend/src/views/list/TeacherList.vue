@@ -1,290 +1,159 @@
 <template>
-  <div>
-
-<!--    <div style="padding: 10px 0 ">-->
-<!--      <el-input style="width: 200px" placeholder="请输入用户名" suffix-icon="el-icon-user" v-model="username"></el-input>-->
-<!--      <el-input class="ml-5" style="width: 200px" placeholder="请输入真实姓名" suffix-icon="el-icon-s-check" v-model="realname"> </el-input>-->
-<!--      <el-button type="primary" style="margin-left: 10px" @click="load">搜索&nbsp;&nbsp;<i class="el-icon-search" /></el-button>-->
-<!--      <el-button type="warning" @click="reset" >重置&nbsp;&nbsp;<i class="el-icon-refresh-right" /></el-button>-->
-<!--      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-<!--      <el-button type="primary" @click="handleAdd">新增 <i class="el-icon-circle-plus-outline"></i></el-button>-->
-<!--      <el-popconfirm-->
-<!--        class="ml-5"-->
-<!--        confirm-button-text="确定"-->
-<!--        cancel-button-text="取消"-->
-<!--        icon="el-icon-info"-->
-<!--        icon-color="red"-->
-<!--        title="您确定删除吗？"-->
-<!--        @confirm="batchDelete"-->
-<!--      >-->
-<!--        <el-button type="danger" slot="reference">批量删除 <i class="el-icon-remove-outline"></i></el-button>-->
-<!--      </el-popconfirm>-->
-<!--      <el-upload-->
-<!--        action="http://localhost:9999/user/import"-->
-<!--        style="display: inline-block"-->
-<!--        class="mr-5"-->
-<!--        :show-file-list="false"-->
-<!--        accept="xlsx"-->
-<!--        :on-success="importExcel">-->
-<!--        <el-button type="primary" class="ml-5">导入 <i class="el-icon-bottom"></i></el-button>-->
-<!--      </el-upload>-->
-<!--      <el-button type="primary" @click="exportExcel">导出 <i class="el-icon-top"></i></el-button>-->
-<!--    </div>-->
-
-    <el-table :data="tableData" border stripe header-cell-class-name="headerBg" @selection-change="handleSelectionChange" >
-      <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="id" label="ID" width="50" ></el-table-column>
-      <el-table-column prop="username" label="用户" width="90" ></el-table-column>
-      <el-table-column prop="realname" label="真实姓名" width="90"></el-table-column>
-      <el-table-column prop="phone" label="电话" width="115" ></el-table-column>
-      <el-table-column prop="role" label="角色" width="115" ></el-table-column>
-      <el-table-column prop="email" label="邮箱" width="170"></el-table-column>
-      <el-table-column prop="status" label="使用状态" width="80">
-        <!--      <el-switch-->
-        <!--          disabled-->
-        <!--          v-model="tableData.status"-->
-        <!--          active-color="#13ce66"-->
-        <!--          active-value= 1-->
-        <!--          inactive-value= 0 >-->
-        <!--      </el-switch>-->
-      </el-table-column>
-      <el-table-column prop="access" label="通过状态" width="80"></el-table-column>
-      <el-table-column prop="loginCount" label="登录次数" width="80"></el-table-column>
-      <el-table-column prop="dateCreated" label="注册日期" width="170" ></el-table-column>
-      <el-table-column prop="smtp" label="Smtp" ></el-table-column>
-      <el-table-column prop="port" label="港口"></el-table-column>
-
-      <el-table-column label="操作" width="250" align="center" fixed="right">
-<!--        <template slot-scope="scope">-->
-<!--          <el-button type="success" @click="handleEdit(scope.row)">编辑 <i class="el-icon-edit"></i></el-button>-->
-<!--          <el-popconfirm-->
-<!--            class="ml-5"-->
-<!--            confirm-button-text="确定"-->
-<!--            cancel-button-text="取消"-->
-<!--            icon="el-icon-info"-->
-<!--            icon-color="red"-->
-<!--            title="您确定删除吗？"-->
-<!--            @confirm="del(scope.row.id)"-->
-<!--          >-->
-<!--            <el-button type="danger" slot="reference">删除 <i class="el-icon-remove-outline"></i></el-button>-->
-<!--          </el-popconfirm>-->
-<!--        </template>-->
-      </el-table-column>
-    </el-table>
-    <div style="padding: 10px 0 ">
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="pageNum"
-        :page-sizes="[5, 10, 20]"
-        :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total">
-      </el-pagination>
+  <a-card :bordered="false">
+    <div id="toolbar">
+      <a-button type="primary" icon="plus" @click="$refs.createExamModal.create()">新建</a-button>&nbsp;
+      <a-button type="primary" icon="reload" @click="loadAll()">刷新</a-button>
     </div>
-
-    <el-dialog title="用户信息" :visible.sync="dialogFormVisible" width="35%">
-      <el-form label-width="70px">
-        <el-form-item label="用户名" >
-          <el-input v-model="form.username" autocomplete="off" ></el-input>
-        </el-form-item>
-        <el-form-item label="角色" >
-          <el-select clearable v-model="form.role" placeholder="请选择角色" style="width: 80%">
-            <el-option v-for="item in roles" :key="item.name" :label="item.name" :value="item.flag">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="真实姓名" >
-          <el-input v-model="form.realname" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="电话" >
-          <el-input v-model="form.phone" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="邮箱" >
-          <el-input v-model="form.email" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="使用状态" >
-          <el-input v-model="form.status" autocomplete="off"/>
-          <!--        <el-switch-->
-          <!--            v-model="form.status"-->
-          <!--            active-color="#13ce66"-->
-          <!--            active-value="1"-->
-          <!--            inactive-value="0"-->
-          <!--        />-->
-        </el-form-item>
-        <!--            <el-form-item label="通过状态" >-->
-        <!--              <el-input v-model="form.access" autocomplete="off"></el-input>-->
-        <!--            </el-form-item>-->
-        <!--            <el-form-item label="登录次数" >-->
-        <!--              <el-input v-model="form.loginCount" autocomplete="off"></el-input>-->
-        <!--            </el-form-item>-->
-        <el-form-item label="Smtp" >
-          <el-input v-model="form.smtp" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="港口" >
-          <el-input v-model="form.port" autocomplete="off"></el-input>
-        </el-form-item>
-
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="load">取 消</el-button>
-        <el-button type="primary" @click="save">确 定</el-button>
-      </div>
-    </el-dialog>
-  </div>
+    <BootstrapTable
+      ref="table"
+      :columns="columns"
+      :data="tableData"
+      :options="options"
+    />
+    <!-- ref是为了方便用this.$refs.modal直接引用，下同 -->
+    <step-by-step-exam-modal ref="createExamModal" @ok="handleOk" />
+    <!-- 这里的详情需要传进去  -->
+    <exam-edit-modal ref="editExamModal" @ok="handleOk" />
+    <!--  更新考试封面图片  -->
+    <update-avatar-modal ref="updateAvatarModal" @ok="handleOk" />
+  </a-card>
 </template>
 
 <script>
+import '../../plugins/bootstrap-table'
+import { getAllTeacher } from '../../api/teacher'
+import StepByStepExamModal from './modules/StepByStepExamModal'
+import ExamEditModal from './modules/ExamEditModal'
+import UpdateAvatarModal from '@views/list/modules/UpdateAvatarModal'
+
 export default {
-  name: 'UserList',
+  name: 'ExamTableList',
+  components: {
+    UpdateAvatarModal,
+    ExamEditModal,
+    StepByStepExamModal
+  },
   data () {
+    const that = this // 方便在bootstrap-table中引用methods
     return {
-      tableData: [],
-      total: 0,
-      pageNum: 1,
-      pageSize: 10,
-      username: '',
-      realname: '',
-      dialogFormVisible: false,
-      multipleSelection: [],
-      form: {},
-      roles: []
+      // 表头
+      columns: [
+        {
+          title: '序号',
+          field: 'serial',
+          formatter: function (value, row, index) {
+            return index + 1 // 这样的话每翻一页都会重新从1开始，
+          }
+        },
+        {
+          title: '昵称',
+          field: 'Nickname',
+          width: 50
+        },
+        {
+          title: '名称',
+          field: 'name',
+          width: 250
+        },
+        {
+          title: '电话',
+          field: 'telephone'
+        },
+        {
+          title: '创建人',
+          field: 'creator'
+        },
+        {
+          title: '时长',
+          field: 'elapse'
+        },
+        {
+          title: '更新时间',
+          field: 'updateTime'
+        },
+        {
+          title: '操作',
+          field: 'action',
+          width: '150px',
+          formatter: (value, row) => {
+            return '<button type="button" class="btn btn-success view-exam">详情</button>' +
+              '&nbsp;&nbsp;' +
+              '<button type="button" class="btn btn-success edit-exam">编辑</button>'
+          },
+          events: {
+            'click .view-exam': function (e, value, row, index) {
+              that.handleSub(row)
+            },
+            'click .edit-exam': function (e, value, row, index) {
+              that.handleEdit(row)
+            }
+          }
+        }
+      ],
+      tableData: [], // bootstrap-table的数据
+      // custom bootstrap-table
+      options: {
+        search: true,
+        showColumns: true,
+        showExport: true,
+        pagination: true,
+        toolbar: '#toolbar',
+        // 下面两行是支持高级搜索，即按照字段搜索
+        advancedSearch: true,
+        idTable: 'advancedTable'
+        // 下面是常用的事件，更多的点击事件可以参考：http://www.itxst.com/bootstrap-table-events/tutorial.html
+        // onClickRow: that.clickRow,
+        // onClickCell: that.clickCell, // 单元格单击事件
+        // onDblClickCell: that.dblClickCell // 单元格双击事件
+      }
     }
+  },
+  mounted () {
+    this.loadAll() // 加载所有问题的数据
   },
   methods: {
-    load () {
-      this.request.get('/user/page', {
-        params: {
-          pageNum: this.pageNum,
-          pageSize: this.pageSize,
-          username: this.username,
-          realname: this.realname
-        }
-      }).then(res => {
-        // console.log(res)
-        this.tableData = res.data.records
-        this.total = res.data.total
-      })
+    handleEdit (record) {
+      // Todo:修改考试信息和下面的题目，弹出一个可修改的输入框，实际上复用创建题目的模态框即可，还没做完
+      console.log('开始编辑啦')
+      console.log(record)
+      this.$refs.editExamModal.edit(record)
+    },
+    handleAvatarEdit (record) {
+      // Todo:修改考试信息和下面的题目，弹出一个可修改的输入框，实际上复用创建题目的模态框即可，还没做完
+      console.log('开始更新封面啦')
+      console.log(record)
+      this.$refs.updateAvatarModal.edit(record)
+    },
+    handleSub (record) {
+      // 查看考试，不在模态框里查啦，太麻烦
+      // console.log(record)
+      // this.$refs.modalView.edit(record)
 
-      this.request.get('/role').then(res => {
-        this.roles = res.data
-        // console.log("------------------"+res)
+      // 直接跳到参加考试的页面，查看所有题目的详细情况
+      const routeUrl = this.$router.resolve({
+        path: `/exam/${record.id}`
       })
-      this.dialogFormVisible = false // BUG 用来改单击取消出现table数据改变的情况
+      // 和点击考试卡片效果一样，跳转到考试页面，里面有所有题目的情况，相当于就是详情了
+      window.open(routeUrl.href, '_blank')
     },
-    save () {
-      this.request.post('/user', this.form).then(res => {
-        if (res.code === '200') {
-          this.$message.success('保存成功')
-          this.dialogFormVisible = false
-          this.load()
-        } else {
-          this.$message.error('保存失败')
-        }
-      })
+    handleOk () {
+      this.loadAll()
     },
-    del (id) {
-      this.request.delete('/user/delete/' + id).then(res => {
-        if (res.code === '200') {
-          this.$message.success('删除成功')
-          this.dialogFormVisible = false
-          this.load()
-        } else {
-          this.$message.error('删除失败')
-        }
-      })
-    },
-    handleSelectionChange (val) {
-      this.multipleSelection = val // 将选中数组赋给multipleSelection
-      console.log(val)
-    },
-    batchDelete () {
-      const ids = this.multipleSelection.map(v => v.id) // [{},{},{}]  =>[1,2,3]
-      this.request.delete('/user/batchDelete', { data: ids }).then(res => {
-        if (res.code === '200') {
-          this.$message.success('批量删除成功')
-          this.load()
-        } else {
-          this.$message.error('批量删除失败')
-        }
-      })
-    },
-    importExcel () {
-      this.$message.success('文件导入成功')
-      this.load()
-    },
-    exportExcel () {
-      window.open('http://localhost:9999/user/export')
-    },
-    handleAdd () {
-      this.dialogFormVisible = true
-      this.form = {}
-    },
-    handleEdit (row) {
-      this.form = row
-      console.log(row)
-      this.dialogFormVisible = true
-    },
-    reset () {
-      this.username = ''
-      this.realname = ''
-      this.load()
-    },
-    handleSizeChange (pageSize) {
-      console.log(pageSize)
-      this.pageSize = pageSize
-      this.load()
-    },
-    handleCurrentChange (pageNum) {
-      console.log(pageNum)
-      this.pageNum = pageNum
-      this.load()
+    loadAll () {
+      const that = this
+      getAllTeacher()
+        .then(res => {
+          if (res.code === 0) {
+            that.tableData = res.data
+            that.$refs.table._initTable()
+          } else {
+            that.$notification.error({
+              message: '获取教师信息失败',
+              description: res.msg
+            })
+          }
+        })
     }
-  },
-  created () {
-    this.load()
   }
 }
 </script>
-
-<style>
-.headerBg{
-  background-color: #eee !important;
-}
-.el-button--primary {
-  background: rgba(51, 183, 250, 0.83) !important;
-  border-color: #33b7fa !important;
-}
-.el-button--primary:hover {
-  background: #387dff !important;
-  border-color: #387dff !important;
-  color: #FFF !important;
-}
-.el-button--danger {
-  background: #f56c6c !important;
-  border-color: #f56c6c !important;
-}
-.el-button--danger:hover {
-  background: #ec0202 !important;
-  border-color: #ec0202 !important;
-  color: #FFF !important;
-}
-.el-button--warning {
-  background: #e6a23c !important;
-  border-color: #e6a23c !important;
-}
-.el-button--warning:hover {
-  background: #da8200 !important;
-  border-color: #da8200 !important;
-  color: #FFF !important;
-}
-.el-button--success {
-  background: #67c23a !important;
-  border-color: #67c23a !important;
-}
-.el-button--success:hover {
-  background: #0bff3d !important;
-  border-color: #0bff3d !important;
-  color: #FFF !important;
-}
-</style>
