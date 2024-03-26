@@ -51,7 +51,7 @@ export const asyncRouterMap = [
         redirect: '/list/question-table-list',
         component: PageView,
         hideChildrenInMenu: true,
-        meta: { title: '问题管理', keepAlive: true, icon: questionAdmin, permission: ['question-admin'] },
+        meta: { title: '题库管理', keepAlive: true, icon: questionAdmin, permission: ['question-admin'] },
         children: [
           {
             path: '/list/question-table-list',
@@ -77,6 +77,40 @@ export const asyncRouterMap = [
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
             component: () => import('../views/list/ExamTableList'),
             meta: { title: '考试列表', keepAlive: true, permission: ['exam-table-list'] }
+          }
+        ]
+      },
+      {
+        path: '/list/TeacherList',
+        name: 'TeacherList',
+        component: PageView,
+        redirect: '/TeacherList',
+        hideChildrenInMenu: true,
+        meta: { title: '教师管理', icon: examAdmin, permission: ['TeacherList'] },
+        children: [
+          {
+            path: '/list/TeacherList',
+            name: 'TeacherList',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('../views/list/TeacherList.vue'),
+            meta: { title: '教师列表', keepAlive: true, permission: ['TeacherList'] }
+          }
+        ]
+      },
+      {
+        path: '/list/StudentList',
+        name: 'StudentList',
+        component: PageView,
+        redirect: '/StudentList',
+        hideChildrenInMenu: true,
+        meta: { title: '学生管理', icon: examAdmin, permission: ['StudentList'] },
+        children: [
+          {
+            path: '/list/StudentList',
+            name: 'StudentList',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('../views/list/StudentList.vue'),
+            meta: { title: '学生列表', keepAlive: true, permission: ['StudentList'] }
           }
         ]
       },
